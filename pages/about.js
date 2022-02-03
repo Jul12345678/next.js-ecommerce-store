@@ -4,8 +4,10 @@ export default function About() {
   return (
     <div>
       <Header />
-      <h1>About</h1>
-      <p>About page</p>
+      <main>
+        <h1>About</h1>
+        <p>About page</p>
+      </main>
     </div>
   );
 }

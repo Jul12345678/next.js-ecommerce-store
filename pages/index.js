@@ -11,7 +11,10 @@ export default function Home() {
       </Head>
       <Header />
       <main>
-        <div>Home page</div>Home page content
+        <div>
+          <h1>Home page</h1>
+        </div>
+        Home page content
       </main>
     </div>
   );
