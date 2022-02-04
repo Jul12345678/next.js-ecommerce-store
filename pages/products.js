@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '../components/Layout';
-import products from '../util/database';
+import productDataBase from '../util/database';
 
 const productStyles = css`
   border-radius: 5px;
@@ -20,7 +20,7 @@ export default function Products(props) {
         <meta description="List of Products" />
       </Head>
       <h1>Products</h1>
-      {props.products.map((product) => {
+      {productDataBase.props.map((product) => {
         return (
           <div key={`product- ${product.id}`} css={productStyles}>
             {/* Dynamic link /products/1, etc */}
@@ -40,6 +40,6 @@ export default function Products(props) {
 /* Code in getServersideProps only runs in Node.js, and allows you to read files from file system, connect to (real) database, etc.   */
 export function getServerSideProps() {
   return {
-    props: { products: products },
+    props: { products: productDataBase },
   };
 }

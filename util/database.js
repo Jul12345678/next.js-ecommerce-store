@@ -1,8 +1,9 @@
 // import { readFileSync } from 'fs';
 //
+
 // console.log(readFileSync('./README.md', 'utf-8'));
 
-const products = [
+const productsDataBase = [
   { id: 1, name: 'product1', type: 'type1', price: '€' },
   { id: 2, name: 'product2', type: 'type2', price: '€' },
   { id: 3, name: 'product3', type: 'type3', price: '€' },
@@ -13,4 +14,4 @@ const products = [
   { id: 8, name: 'product8', type: 'type8', price: '€' },
 ];
 
-export default products;
+export default productsDataBase;
