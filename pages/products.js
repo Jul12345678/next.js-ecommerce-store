@@ -9,6 +9,8 @@ import {
 } from '@material-ui/core';
 import Head from 'next/head';
 import Link from 'next/link';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import Layout from '../components/Layout';
 import productsDataBase from '../util/database';
 
@@ -61,6 +63,9 @@ export default function Products(props) {
           </Grid>
         ))}
       </Grid>
+      <Footer>
+        <footer></footer>
+      </Footer>
     </Layout>
   );
 }

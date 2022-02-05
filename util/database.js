@@ -12,6 +12,7 @@ const productsDataBase = [
     image: '/spongebob/1.png',
     width: '550',
     height: '300',
+    imageType: '.png',
   },
   {
     id: '2',
@@ -21,6 +22,7 @@ const productsDataBase = [
     image: '/spongebob/2.png',
     width: '500',
     height: '300',
+    imageType: '.png',
   },
   {
     id: '3',
@@ -30,6 +32,7 @@ const productsDataBase = [
     image: '/spongebob/3.png',
     width: '550',
     height: '300',
+    imageType: '.png',
   },
   {
     id: '4',
@@ -39,6 +42,7 @@ const productsDataBase = [
     image: '/spongebob/4.png',
     width: '400',
     height: '400',
+    imageType: '.png',
   },
   {
     id: '5',
@@ -48,6 +52,7 @@ const productsDataBase = [
     image: '/spongebob/5.png',
     width: '550',
     height: '400',
+    imageType: '.png',
   },
   {
     id: '6',
@@ -57,6 +62,7 @@ const productsDataBase = [
     image: '/spongebob/6.png',
     width: '500',
     height: '300',
+    imageType: '.png',
   },
   {
     id: '7',
@@ -66,6 +72,7 @@ const productsDataBase = [
     image: '/spongebob/7.png',
     width: '550',
     height: '400',
+    imageType: '.png',
   },
 
   {
@@ -75,7 +82,18 @@ const productsDataBase = [
     price: '€',
     image: '/spongebob/8.jpg',
     width: '550',
-    height: '300',
+    height: '400',
+    imageType: '.jpg',
+  },
+  {
+    id: '9',
+    name: 'Fancy Living Digest',
+    type: 'Magazine',
+    price: '€',
+    image: '/spongebob/9.png',
+    width: '550',
+    height: '400',
+    imageType: '.png',
   },
 ];
 

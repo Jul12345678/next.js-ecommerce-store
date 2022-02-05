@@ -32,7 +32,7 @@ export default function SingleProduct(props) {
       <section css={productContentStyle}>
         <div>
           <Image
-            src={`/spongebob/${props.product.id}.png`}
+            src={`/spongebob/${props.product.id}${props.product.imageType}`}
             width={props.product.width}
             height={props.product.height}
           />
