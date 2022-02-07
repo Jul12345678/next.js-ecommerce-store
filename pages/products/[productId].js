@@ -2,6 +2,8 @@ import { css } from '@emotion/react';
 // [fileName] = kind of like a variable / description of information after slash in URL
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
+import NextLink from 'next/link';
 import Layout from '../../components/Layout';
 import productsDataBase from '../../util/database';
 
@@ -26,6 +28,11 @@ export default function SingleProduct(props) {
         </title>
         <meta description={`${props.product.name}  ${props.product.type}`} />
       </Head>
+      <div>
+        <NextLink href="/products" passHref>
+          <Link>Back to products</Link>
+        </NextLink>
+      </div>
       <h1 css={productTitleStyle}>
         {props.product.name} ({props.product.type})
       </h1>
@@ -37,9 +44,9 @@ export default function SingleProduct(props) {
             height={props.product.height}
           />
         </div>
-        <div>id: {props.product.id}</div>
-        <div>name: {props.product.name}</div>
-        <div>type: {props.product.type}</div>
+        <div>Id: {props.product.id}</div>
+        <div>Name: {props.product.name}</div>
+        <div>Type: {props.product.type}</div>
       </section>
     </Layout>
   );

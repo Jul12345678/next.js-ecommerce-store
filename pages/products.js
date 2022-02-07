@@ -1,7 +1,9 @@
 import { css } from '@emotion/react';
 import {
+  Button,
   Card,
   CardActionArea,
+  CardActions,
   CardContent,
   CardMedia,
   Grid,
@@ -9,6 +11,7 @@ import {
 } from '@material-ui/core';
 import Head from 'next/head';
 import Link from 'next/link';
+import NextLink from 'next/link';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Layout from '../components/Layout';
@@ -23,9 +26,9 @@ const productStyles = css`
 const productsPageStyle = css`
   border-radius: 5px;
   padding: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   align-items: center;
-  margin-left: 870px;
+  margin-left: 850px;
 `;
 
 export default function Products(props) {
@@ -40,25 +43,33 @@ export default function Products(props) {
         {props.products.map((product) => (
           <Grid item md={4} key={product.name}>
             <Card>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  image={product.image}
-                  title={product.name}
-                />
-                <CardContent>
-                  <Typography>
-                    <div key={`product-${product.id}`} css={productStyles}>
-                      {/* Dynamic link /products/1, etc */}
-                      <Link href={`/products/${product.id}`}>
-                        <a>
-                          {product.name} ({product.type})
-                        </a>
-                      </Link>{' '}
-                    </div>
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
+              <NextLink href={`/products/${product.id}`} passHref>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    image={product.image}
+                    title={product.name}
+                  />
+                  <CardContent>
+                    <Typography>
+                      <div key={`product-${product.id}`} css={productStyles}>
+                        {/* Dynamic link /products/1, etc */}
+                        <Link href={`/products/${product.id}`}>
+                          <a>
+                            {product.name} ({product.type})
+                          </a>
+                        </Link>{' '}
+                      </div>
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </NextLink>
+              <CardActions>
+                <Typography>${product.price}</Typography>
+                <Button size="small" color="primary" variant="contained">
+                  Add to cart
+                </Button>
+              </CardActions>
             </Card>
           </Grid>
         ))}
