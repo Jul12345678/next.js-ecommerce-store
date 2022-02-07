@@ -18,17 +18,16 @@ import Layout from '../components/Layout';
 import productsDataBase from '../util/database';
 
 const productStyles = css`
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  padding: 15px;
-  margin-bottom: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 20px;
 `;
 const productsPageStyle = css`
   border-radius: 5px;
   padding: 15px;
   margin-bottom: 30px;
   align-items: center;
-  margin-left: 850px;
+  margin-left: 870px;
 `;
 
 export default function Products(props) {

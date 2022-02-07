@@ -44,7 +44,7 @@ export default function SingleProduct(props) {
             height={props.product.height}
           />
         </div>
-        <div>Id: {props.product.id}</div>
+        {/* <div>Id: {props.product.id}</div> */}
         <div>Name: {props.product.name}</div>
         <div>Type: {props.product.type}</div>
       </section>

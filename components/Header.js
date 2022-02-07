@@ -4,11 +4,13 @@ import Link from 'next/link';
 const headerStyles = css`
   background-color: #f7e948;
   padding: 10px 15px;
-  border-radius: 4px;
+  border-radius: 10px;
   margin: 8px 8px 20px;
 
   a + a {
-    margin-left: 820px;
+    margin-left: 860px;
+    position: relative;
+    margin-right: -70px;
   }
 `;
 export default function Header() {
