@@ -1,7 +1,8 @@
-// import { readFileSync } from 'fs';
-//
-
-// console.log(readFileSync('./README.md', 'utf-8'));
+import Head from 'next/head';
+import Link from 'next/link';
+import { useState } from 'react';
+import Layout from '../components/Layout';
+import { getParsedCookie, setParsedCookie } from '../util/cookies';
 
 const productsDataBase = [
   {
