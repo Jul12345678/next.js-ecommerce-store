@@ -51,7 +51,7 @@ const productsDataBase = [
     width: '550',
     height: '400',
     imageType: '.png',
-    price: '10/Month',
+    price: '10',
   },
   {
     id: '6',
@@ -73,7 +73,7 @@ const productsDataBase = [
     width: '550',
     height: '400',
     imageType: '.png',
-    price: '10/Month',
+    price: '10',
   },
 
   {
@@ -96,7 +96,7 @@ const productsDataBase = [
     width: '550',
     height: '400',
     imageType: '.png',
-    price: '10/Month',
+    price: '10',
   },
 ];
 
