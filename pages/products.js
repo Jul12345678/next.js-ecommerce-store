@@ -15,7 +15,7 @@ import NextLink from 'next/link';
 import { useState } from 'react';
 import Layout from '../components/Layout';
 import { getParsedCookie, setParsedCookie } from '../util/cookies';
-import productsDataBase from '../util/database';
+import productsDataBase, { readProducts } from '../util/database';
 
 const productStyles = css`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
@@ -108,14 +108,18 @@ export default function Products(props) {
 // http://localhost:3000/products/1
 
 /* Code in getServersideProps only runs in Node.js, and allows you to read files from file system, connect to (real) database, etc.   */
-export function getServerSideProps(context) {
-  const cartOnCookies = context.req.cookies.cart || '[]';
-  const cart = JSON.parse(cartOnCookies);
+export async function getServerSideProps(context) {
+  const cartCookies = context.req.cookies.cart || '[]';
+  const cart = JSON.parse(cartCookies);
+
+  const productss = await readProducts();
 
   console.log(cart);
   return {
     props: {
+      // to use database to import everything, also implement "image", "width", height, etc to database
       products: productsDataBase,
+      productss: productss,
       cart,
     },
   };

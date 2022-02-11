@@ -121,7 +121,7 @@ export default function SingleProduct(props) {
     </Layout>
   );
 }
-
+// for database import "async" before function
 export function getServerSideProps(context) {
   const productId = context.query.productId;
 
@@ -131,10 +131,16 @@ export function getServerSideProps(context) {
   const cartOnCookies = context.req.cookies.cart || '[]';
   const cart = JSON.parse(cartOnCookies);
 
+  /*
+     This then for database
+  */
+  // const product = await getProduct(productId)
   return {
     props: {
       product: matchingProduct,
       cart,
+      // product: product,
     },
   };
 }
+// images have to be put into database

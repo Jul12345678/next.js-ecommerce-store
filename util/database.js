@@ -1,3 +1,48 @@
+import camelcaseKeys from 'camelcase-keys';
+import { config } from 'dotenv-safe';
+import postgres from 'postgres';
+
+// read enviroment variables from the .env file, which will then be available for all following code
+config();
+
+// this will make problems when editing files
+// (next.js restarts)
+// const sql = postgres();
+// instead use this:
+function connectOneTimeToDatabase() {
+  // when in development connect only once to database
+  if (!globalThis.postgreSqlClient) {
+    globalThis.postgreSqlClient = postgres();
+  }
+  const sql = globalThis.postgreSqlClient;
+
+  return sql;
+}
+const sql = connectOneTimeToDatabase();
+
+export async function readProducts() {
+  const productss = await sql`
+SELECT * FROM products;
+`;
+  return productss.map((product) => camelcaseKeys(product));
+}
+
+export async function getProduct(id) {
+  const [product] = await sql`
+SELECT * FROM products WHERE id =${id};
+`;
+  return camelcaseKeys(product);
+}
+
+// // we dont need this
+// (async function () {
+//   return await sql`
+// SELECT * FROM products;
+// `;
+// })()
+//   .then((products) => console.log(products))
+//   .catch(() => {});
+
 const productsDataBase = [
   {
     id: '1',
