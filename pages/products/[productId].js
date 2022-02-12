@@ -7,7 +7,7 @@ import NextLink from 'next/link';
 import { useState } from 'react';
 import Layout from '../../components/Layout';
 import { getParsedCookie, setParsedCookie } from '../../util/cookies.js';
-import productsDataBase from '../../util/database';
+import { getProduct } from '../../util/database';
 
 const productContentStyle = css`
   border-radius: 5px;
@@ -97,11 +97,7 @@ export default function SingleProduct(props) {
       </h1>
       <section css={productContentStyle}>
         <div>
-          <Image
-            src={`/spongebob/${props.product.id}${props.product.imageType}`}
-            width={props.product.width}
-            height={props.product.height}
-          />
+          <Image src={`${props.product.image}`} width={`550`} height={`400`} />
         </div>
 
         <div>Name: {props.product.name}</div>
@@ -122,14 +118,16 @@ export default function SingleProduct(props) {
   );
 }
 // for database import "async" before function
-export function getServerSideProps(context) {
+export async function getServerSideProps(context) {
   const productId = context.query.productId;
 
-  const matchingProduct = productsDataBase.find((product) => {
-    return product.id === productId;
-  });
+  //  const matchingProduct = productsDataBase.find((product) => {
+  //    return product.id === productId;
+  //  });
   const cartOnCookies = context.req.cookies.cart || '[]';
   const cart = JSON.parse(cartOnCookies);
+
+  const productsss = await getProduct(productId);
 
   /*
      This then for database
@@ -137,7 +135,7 @@ export function getServerSideProps(context) {
   // const product = await getProduct(productId)
   return {
     props: {
-      product: matchingProduct,
+      product: productsss,
       cart,
       // product: product,
     },

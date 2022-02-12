@@ -15,7 +15,7 @@ import NextLink from 'next/link';
 import { useState } from 'react';
 import Layout from '../components/Layout';
 import { getParsedCookie, setParsedCookie } from '../util/cookies';
-import productsDataBase, { readProducts } from '../util/database';
+import { getProducts } from '../util/database';
 
 const productStyles = css`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
@@ -112,14 +112,12 @@ export async function getServerSideProps(context) {
   const cartCookies = context.req.cookies.cart || '[]';
   const cart = JSON.parse(cartCookies);
 
-  const productss = await readProducts();
+  const productss = await getProducts();
 
-  console.log(cart);
   return {
     props: {
       // to use database to import everything, also implement "image", "width", height, etc to database
-      products: productsDataBase,
-      productss: productss,
+      products: productss,
       cart,
     },
   };

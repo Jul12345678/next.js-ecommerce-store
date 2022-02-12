@@ -1,8 +1,9 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
+import { useState } from 'react';
 import Layout from '../components/Layout';
 import { getParsedCookie, setParsedCookie } from '../util/cookies.js';
-import productsDataBase from '../util/database';
+import { getProducts } from '../util/database';
 
 const cartStyle = css`
   margin: auto;
@@ -11,6 +12,7 @@ const cartStyle = css`
 `;
 
 export default function ShoppingCart(props) {
+  const [cartList, setCartList] = useState(props.cart);
   const cookieValue = getParsedCookie('cart') || [];
   const newCookie = cookieValue.map((cookieObject) => {
     function findName() {
@@ -20,6 +22,7 @@ export default function ShoppingCart(props) {
             ...cookieObject,
             name: singleProduct.name,
             price: singleProduct.price,
+            id: singleProduct.id,
           };
         }
       }
@@ -32,7 +35,46 @@ export default function ShoppingCart(props) {
     return previousValue + currentValue.price * currentValue.items;
   }, 0);
 
-  console.log('totalPrice', totalPrice);
+  function removeProductCart(id) {
+    const cartValue = getParsedCookie('cart') || [];
+
+    const updatedCookie = cartValue.filter(
+      (cookieObject) => cookieObject.id !== id,
+    );
+
+    setParsedCookie('cart', updatedCookie);
+    setCartList(updatedCookie);
+  }
+
+  function itemsCountUp(id) {
+    const cartValue = getParsedCookie('cart') || [];
+    const updatedCookie = cartValue.map((cookieObject) => {
+      if (cookieObject.id === id) {
+        return { ...cookieObject, items: cookieObject.items + 1 };
+      } else {
+        return cookieObject;
+      }
+    });
+    setCartList(updatedCookie);
+    setParsedCookie('cart', updatedCookie);
+  }
+
+  function itemsCountDown(id) {
+    const cartValue = getParsedCookie('cart') || [];
+    const updatedCookie = cartValue.map((cookieObject) => {
+      if (cookieObject.id === id) {
+        if (cookieObject.items === 1) {
+          return cookieObject;
+        }
+        return { ...cookieObject, items: cookieObject.items - 1 };
+      } else {
+        return cookieObject;
+      }
+    });
+    setCartList(updatedCookie);
+    setParsedCookie('cart', updatedCookie);
+  }
+
   return (
     <Layout>
       <Head>
@@ -47,8 +89,19 @@ export default function ShoppingCart(props) {
         return (
           <div key={singleItem.id}>
             {' '}
-            id: {singleItem.id} name:{singleItem.name} price: {singleItem.price}{' '}
-            Quantity: {singleItem.items} total price item: {totalItemPrice}
+            <ul>
+              <li>Name: {singleItem.name}</li>
+              <li>Price: {singleItem.price}</li>
+              <li>Total amount of items: {singleItem.items}</li>{' '}
+              <button onClick={() => itemsCountDown(singleItem.id)}>- </button>
+              {singleItem.items}
+              <button onClick={() => itemsCountUp(singleItem.id)}>+ </button>
+              <li>Price: {totalItemPrice}</li>
+              <button onClick={() => removeProductCart(singleItem.id)}>
+                {' '}
+                Remove from cart{' '}
+              </button>
+            </ul>{' '}
           </div>
         );
       })}
@@ -56,13 +109,13 @@ export default function ShoppingCart(props) {
     </Layout>
   );
 }
-export function getServerSideProps(context) {
-  const cartOnCookies = context.req.cookies.cart || '[]';
-  const cart = JSON.parse(cartOnCookies);
-
+export async function getServerSideProps(context) {
+  const cartCookies = context.req.cookies.cart || '[]';
+  const cart = JSON.parse(cartCookies);
+  const productss = await getProducts();
   return {
     props: {
-      products: productsDataBase,
+      products: productss,
       addedProduct: cart,
     },
   };
