@@ -17,19 +17,11 @@ id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   ('Modern Dentistry', 'Health Magazine', 10, '/spongebob/5.png'),
   ('Rocky Road', 'Dessert', 10, '/spongebob/6.png'),
   ('Long Tan and Handsome', 'Lifestyle Magazine', 10, '/spongebob/7.png'),
-  ('Canned Bread', 'Energizer', 10, '/spongebob/8.png'),
+  ('Canned Bread', 'Energizer', 10, '/spongebob/8.jpg'),
   ('Fancy Living Digest', 'Magazine', 10, '/spongebob/9.png');
 
 
-  INSERT INTO products (
-    width integer NOT NULL,
-    height integer NOT NULL
-  )
 
-  INSERT INTO products
-  (width, height)
-  VALUES
-  ('550', '300'),
 
 -- read products (R in CRUD = Read)
  SELECT * FROM products;

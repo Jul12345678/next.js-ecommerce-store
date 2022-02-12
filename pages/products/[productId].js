@@ -97,7 +97,11 @@ export default function SingleProduct(props) {
       </h1>
       <section css={productContentStyle}>
         <div>
-          <Image src={`${props.product.image}`} width={`550`} height={`400`} />
+          <Image
+            src={`${props.product.image}`}
+            width={`700%`}
+            height={`500%`}
+          />
         </div>
 
         <div>Name: {props.product.name}</div>
