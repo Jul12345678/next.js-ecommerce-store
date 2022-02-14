@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useState } from 'react';
 import Layout from '../components/Layout';
 import { getParsedCookie, setParsedCookie } from '../util/cookies.js';
@@ -106,6 +107,11 @@ export default function ShoppingCart(props) {
         );
       })}
       <div>Total Price: {totalPrice}</div>
+      <Link href="/checkout">
+        <a>
+          <button data-test-id="cart-checkout">Buy</button>
+        </a>
+      </Link>
     </Layout>
   );
 }
