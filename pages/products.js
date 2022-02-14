@@ -17,6 +17,9 @@ import Layout from '../components/Layout';
 import { getParsedCookie, setParsedCookie } from '../util/cookies';
 import { getProducts } from '../util/database';
 
+const productCards = css`
+  height: 40vh;
+`;
 const productStyles = css`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -64,9 +67,10 @@ export default function Products(props) {
           return (
             <Grid item md={4} key={product.name}>
               <Card>
-                <NextLink href={`/products/${product.id}`} passHref>
+                <Link href={`/products/${product.id}`} passHref>
                   <CardActionArea>
                     <CardMedia
+                      css={productCards}
                       component="img"
                       image={product.image}
                       title={product.name}
@@ -84,7 +88,7 @@ export default function Products(props) {
                       </Typography>
                     </CardContent>
                   </CardActionArea>
-                </NextLink>
+                </Link>
                 <CardActions>
                   <Typography>${product.price}</Typography>
                   <Button
@@ -116,7 +120,6 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      // to use database to import everything, also implement "image", "width", height, etc to database
       products: productss,
       cart,
     },

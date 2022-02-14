@@ -11,16 +11,16 @@ const headerStyles = css`
   a + a {
     margin-left: 860px;
     position: relative;
-    margin-right: -70px;
+    margin-right: -100px;
   }
 `;
 export default function Header() {
   const cookieValue = getParsedCookie('cart') || [];
   console.log('CookieValue', cookieValue);
-  const totalQuantity = cookieValue.reduce((previousValue, currentValue) => {
+  const quantity = cookieValue.reduce((previousValue, currentValue) => {
     return previousValue + currentValue.items;
   }, 0);
-  console.log('totalQuantity', totalQuantity);
+  console.log('Quantity', quantity);
   return (
     <header css={headerStyles}>
       <Link href="/">
@@ -30,14 +30,14 @@ export default function Header() {
         <a>Products</a>
       </Link>
       <Link href="/cart">
-        <a>Shopping Cart</a>
+        <a>Shopping Cart ({isNaN(quantity) ? '0' : quantity})</a>
       </Link>
     </header>
   );
 }
 export function getServerSideProps(context) {
-  const cartOnCookies = context.req.cookies.cart || '[]';
-  const cart = JSON.parse(cartOnCookies);
+  const cartCookies = context.req.cookies.cart || '[]';
+  const cart = JSON.parse(cartCookies);
 
   return {
     props: {

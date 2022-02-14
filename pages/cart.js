@@ -1,4 +1,14 @@
 import { css } from '@emotion/react';
+import {
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Grid,
+  Typography,
+} from '@material-ui/core';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -6,12 +16,22 @@ import Layout from '../components/Layout';
 import { getParsedCookie, setParsedCookie } from '../util/cookies.js';
 import { getProducts } from '../util/database';
 
+const entireCard = css`
+  margin-left: 150px;
+`;
+const cardImage = css`
+  height: 150px;
+  margin-bottom: -125px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+`;
 const cartStyle = css`
   margin: auto;
   text-align: center;
   position: relative;
 `;
-
+const cartItemsStyle = css``;
 export default function ShoppingCart(props) {
   const [cartList, setCartList] = useState(props.cart);
   const cookieValue = getParsedCookie('cart') || [];
@@ -24,6 +44,7 @@ export default function ShoppingCart(props) {
             name: singleProduct.name,
             price: singleProduct.price,
             id: singleProduct.id,
+            image: singleProduct.image,
           };
         }
       }
@@ -83,29 +104,58 @@ export default function ShoppingCart(props) {
       </Head>
       <div css={cartStyle}>
         <h1>Shopping Cart</h1>
-        <p>Shopping Cart</p>
       </div>
-      {newCookie.map((singleItem) => {
-        const totalItemPrice = singleItem.price * singleItem.items;
-        return (
-          <div key={singleItem.id}>
-            {' '}
-            <ul>
-              <li>Name: {singleItem.name}</li>
-              <li>Price: {singleItem.price}</li>
-              <li>Total amount of items: {singleItem.items}</li>{' '}
-              <button onClick={() => itemsCountDown(singleItem.id)}>- </button>
-              {singleItem.items}
-              <button onClick={() => itemsCountUp(singleItem.id)}>+ </button>
-              <li>Price: {totalItemPrice}</li>
-              <button onClick={() => removeProductCart(singleItem.id)}>
-                {' '}
-                Remove from cart{' '}
-              </button>
-            </ul>{' '}
-          </div>
-        );
-      })}
+
+      <Grid item md={3}>
+        {newCookie.map((singleItem) => {
+          const totalItemPrice = singleItem.price * singleItem.items;
+          return (
+            <div key={singleItem.id} css={cartItemsStyle}>
+              <table>
+                <Grid item md={15}>
+                  <Card css={entireCard}>
+                    <tr>
+                      <th>
+                        {' '}
+                        <CardMedia
+                          css={cardImage}
+                          component="img"
+                          image={singleItem.image}
+                          name={singleItem.name}
+                          price={singleItem.price}
+                        />
+                      </th>
+                      <CardContent>
+                        <Typography>
+                          Name: {singleItem.name}
+                          <br />
+                          Price: {singleItem.price}
+                          <br />
+                          <button onClick={() => itemsCountDown(singleItem.id)}>
+                            -{' '}
+                          </button>
+                          {singleItem.items}
+                          <button onClick={() => itemsCountUp(singleItem.id)}>
+                            +{' '}
+                          </button>
+                          <br />
+                          <th>Price: {totalItemPrice}</th>
+                          <button
+                            onClick={() => removeProductCart(singleItem.id)}
+                          >
+                            Remove from cart
+                          </button>{' '}
+                        </Typography>
+                      </CardContent>
+                    </tr>
+                  </Card>
+                </Grid>{' '}
+              </table>
+            </div>
+          );
+        })}
+      </Grid>
+
       <div>Total Price: {totalPrice}</div>
       <Link href="/checkout">
         <a>
