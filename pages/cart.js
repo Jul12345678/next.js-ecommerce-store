@@ -16,19 +16,71 @@ import Layout from '../components/Layout';
 import { getParsedCookie, setParsedCookie } from '../util/cookies.js';
 import { getProducts } from '../util/database';
 
+const minusButtonStyle = css`
+  margin-top: 2px;
+  margin-right: 5px;
+  padding-top: 0px;
+  box-sizing: border-box;
+  border-width: 1px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  display: inline-block;
+`;
+const addButtonStyle = css`
+  margin-top: 5px;
+  margin-left: 5px;
+  padding-top: 0px;
+  box-sizing: border-box;
+  border-width: 1px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  display: inline-block;
+`;
+const cardsToGrid = css`
+  display: grid;
+  grid-gap: 1px;
+  grid-template-columns: 500px 500px 500px;
+`;
+const removeButtonStyle = css`
+  margin-top: px;
+  padding: 3px;
+  box-sizing: border-box;
+  border-width: 1px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  display: inline-block;
+`;
+
+const buyButtonStyle = css`
+  margin-left: 50px;
+`;
+const totalPriceStyle = css`
+  margin-left: 50px;
+`;
+
 const entireCard = css`
-  margin-left: 150px;
+  margin-left: 40px;
+  margin-top: 30px;
 `;
 const cardImage = css`
   height: 150px;
-  margin-bottom: -125px;
-  justify-content: space-between;
-  display: flex;
-  flex-direction: column;
+  margin-bottom: -135px;
 `;
 const cartStyle = css`
-  margin: auto;
-  text-align: center;
+  margin-top: 50px;
+  margin-left: 60px;
   position: relative;
 `;
 const cartItemsStyle = css``;
@@ -106,13 +158,13 @@ export default function ShoppingCart(props) {
         <h1>Shopping Cart</h1>
       </div>
 
-      <Grid item md={3}>
+      <Grid css={cardsToGrid} item md={5}>
         {newCookie.map((singleItem) => {
           const totalItemPrice = singleItem.price * singleItem.items;
           return (
             <div key={singleItem.id} css={cartItemsStyle}>
               <table>
-                <Grid item md={15}>
+                <Grid item md={20}>
                   <Card css={entireCard}>
                     <tr>
                       <th>
@@ -131,16 +183,23 @@ export default function ShoppingCart(props) {
                           <br />
                           Price: {singleItem.price}
                           <br />
-                          <button onClick={() => itemsCountDown(singleItem.id)}>
+                          <button
+                            css={minusButtonStyle}
+                            onClick={() => itemsCountDown(singleItem.id)}
+                          >
                             -{' '}
                           </button>
                           {singleItem.items}
-                          <button onClick={() => itemsCountUp(singleItem.id)}>
+                          <button
+                            css={addButtonStyle}
+                            onClick={() => itemsCountUp(singleItem.id)}
+                          >
                             +{' '}
                           </button>
                           <br />
-                          <th>Price: {totalItemPrice}</th>
+                          <p>Total Price: {totalItemPrice}</p>
                           <button
+                            css={removeButtonStyle}
                             onClick={() => removeProductCart(singleItem.id)}
                           >
                             Remove from cart
@@ -156,10 +215,12 @@ export default function ShoppingCart(props) {
         })}
       </Grid>
 
-      <div>Total Price: {totalPrice}</div>
+      <div css={totalPriceStyle}>Total Price: {totalPrice}</div>
       <Link href="/checkout">
         <a>
-          <button data-test-id="cart-checkout">Buy</button>
+          <button css={buyButtonStyle} data-test-id="cart-checkout">
+            Buy
+          </button>
         </a>
       </Link>
     </Layout>

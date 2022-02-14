@@ -11,7 +11,7 @@ const headerStyles = css`
   a + a {
     margin-left: 860px;
     position: relative;
-    margin-right: -100px;
+    margin-right: -110px;
   }
 `;
 export default function Header() {
