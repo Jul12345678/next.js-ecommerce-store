@@ -32,10 +32,11 @@ const productsPageStyle = css`
   align-items: center;
   margin-left: 870px;
 `;
+
 export default function Products(props) {
   const [cartList, setCartList] = useState(props.cart);
 
-  function toggleProductCart(id) {
+  function toggleProductCart(id: number | string) {
     const cookieValue = getParsedCookie('cart') || [];
     const existIdOnArray = cookieValue.some((cookieObject) => {
       return cookieObject.id === id;
@@ -56,7 +57,6 @@ export default function Products(props) {
     <Layout>
       <Head>
         <title>Products</title>
-        <meta description="List of Products" />
       </Head>
       <h1 css={productsPageStyle}>Products</h1>
       <Grid container spacing={3}>

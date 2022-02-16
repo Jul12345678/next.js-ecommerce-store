@@ -1,9 +1,6 @@
 import { css } from '@emotion/react';
 import {
-  Button,
   Card,
-  CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
   Grid,
@@ -85,7 +82,7 @@ const cartStyle = css`
 `;
 const cartItemsStyle = css``;
 export default function ShoppingCart(props) {
-  const [cartList, setCartList] = useState(props.cart);
+  const [setCartList] = useState(props.cart);
   const cookieValue = getParsedCookie('cart') || [];
   const newCookie = cookieValue.map((cookieObject) => {
     function findName() {
