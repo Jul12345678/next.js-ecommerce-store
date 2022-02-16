@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import Link from 'next/link';
-import { getParsedCookie, setParsedCookie } from '../util/cookies.js';
+import { getParsedCookie, setParsedCookie } from '../util/cookies.ts';
 
 const headerStyles = css`
   background-color: #f7e948;

@@ -4,34 +4,43 @@ import postgres from 'postgres';
 
 // read enviroment variables from the .env file, which will then be available for all following code
 config();
-
+declare module globalThis {
+  let postgresSqlClient: ReturnType<typeof postgres> | undefined;
+}
 // this will make problems when editing files
 // (next.js restarts)
 // const sql = postgres();
 // instead use this:
 function connectOneTimeToDatabase() {
   // when in development connect only once to database
-  if (!globalThis.postgreSqlClient) {
-    globalThis.postgreSqlClient = postgres();
+  if (!globalThis.postgresSqlClient) {
+    globalThis.postgresSqlClient = postgres();
   }
-  const sql = globalThis.postgreSqlClient;
+  const sql = globalThis.postgresSqlClient;
 
   return sql;
 }
+export type Product = {
+  id: number;
+  name: string;
+  type: string;
+  image: string;
+  price: number;
+};
 const sql = connectOneTimeToDatabase();
 
 export async function getProducts() {
-  const productss = await sql`
+  const productss = await sql<Product[]>`
 SELECT * FROM products;
 `;
-  return productss.map((product) => camelcaseKeys(product));
+  return productss;
 }
 
-export async function getProduct(id) {
-  const [productsss] = await sql`
+export async function getProduct(id: number) {
+  const [productsss] = await sql<[Product | undefined]>`
 SELECT * FROM products WHERE id =${id};
 `;
-  return camelcaseKeys(productsss);
+  return productsss;
 }
 
 // // we dont need this

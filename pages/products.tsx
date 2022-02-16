@@ -9,13 +9,18 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import NextLink from 'next/link';
 import { useState } from 'react';
 import Layout from '../components/Layout';
-import { getParsedCookie, setParsedCookie } from '../util/cookies';
-import { getProducts } from '../util/database';
+import {
+  CartProduct,
+  getParsedCookie,
+  setParsedCookie,
+  ShoppingCart,
+} from '../util/cookies';
+import { getProducts, Product } from '../util/database';
 
 const productCards = css`
   height: 40vh;
@@ -32,19 +37,26 @@ const productsPageStyle = css`
   align-items: center;
   margin-left: 870px;
 `;
+type Props = {
+  products: Product;
+  cart: ShoppingCart;
+};
 
-export default function Products(props) {
+export default function Products(props: Props) {
   const [cartList, setCartList] = useState(props.cart);
 
   function toggleProductCart(id: number | string) {
     const cookieValue = getParsedCookie('cart') || [];
-    const existIdOnArray = cookieValue.some((cookieObject) => {
+
+    const existIdOnArray = cookieValue.some((cookieObject: CartProduct) => {
       return cookieObject.id === id;
     });
 
     let newCookie;
     if (existIdOnArray) {
-      newCookie = cookieValue.filter((cookieObject) => cookieObject.id !== id);
+      newCookie = cookieValue.filter(
+        (cookieObject: CartProduct) => cookieObject.id !== id,
+      );
     } else {
       newCookie = [...cookieValue, { id: id, items: 1 }];
     }
@@ -112,7 +124,7 @@ export default function Products(props) {
 // http://localhost:3000/products/1
 
 /* Code in getServersideProps only runs in Node.js, and allows you to read files from file system, connect to (real) database, etc.   */
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const cartCookies = context.req.cookies.cart || '[]';
   const cart = JSON.parse(cartCookies);
 

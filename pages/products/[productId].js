@@ -6,7 +6,7 @@ import Link from 'next/link';
 import NextLink from 'next/link';
 import { useState } from 'react';
 import Layout from '../../components/Layout';
-import { getParsedCookie, setParsedCookie } from '../../util/cookies.js';
+import { getParsedCookie, setParsedCookie } from '../../util/cookies.ts';
 import { getProduct } from '../../util/database';
 
 const productContentStyle = css`
