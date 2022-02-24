@@ -27,17 +27,21 @@ export default function Header() {
   );
   console.log('Quantity', quantity);
   return (
-    <header css={headerStyles}>
-      <Link href="/">
-        <a>Home</a>
-      </Link>
-      <Link href="/products">
-        <a>Products</a>
-      </Link>
-      <Link href="/cart">
-        <a>Shopping Cart ({isNaN(quantity) ? '0' : quantity})</a>
-      </Link>
-    </header>
+    <div data-test-id="cart-link">
+      <header css={headerStyles}>
+        <Link href="/">
+          <a>Home</a>
+        </Link>
+        <Link href="/products">
+          <a data-test-id="header-products-link">Products</a>
+        </Link>
+        <Link href="/cart">
+          <a data-test-id="cart-count">
+            Shopping Cart ({isNaN(quantity) ? '0' : quantity})
+          </a>
+        </Link>
+      </header>
+    </div>
   );
 }
 export function getServerSideProps(context: GetServerSidePropsContext) {

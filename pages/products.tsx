@@ -90,7 +90,10 @@ export default function Products(props: Props) {
                     />
                     <CardContent>
                       <Typography>
-                        <div key={`product-${product.id}`} css={productStyles}>
+                        <div
+                          data-test-id={`product-${product.id}`}
+                          css={productStyles}
+                        >
                           {/* Dynamic link /products/1, etc */}
                           <Link href={`/products/${product.id}`}>
                             <a>

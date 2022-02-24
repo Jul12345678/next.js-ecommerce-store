@@ -98,6 +98,7 @@ export default function SingleProduct(props) {
       <section css={productContentStyle}>
         <div>
           <Image
+            data-test-id="product-image"
             src={`${props.product.image}`}
             width={`700%`}
             height={`500%`}
@@ -106,15 +107,29 @@ export default function SingleProduct(props) {
 
         <div>Name: {props.product.name}</div>
         <div>Type: {props.product.type}</div>
+        <div data-test-id="product-price">Price: {props.product.price}$</div>
 
-        <button onClick={() => toggleCart(props.product.id)}>
+        <button
+          data-test-id="product-add-to-cart"
+          onClick={() => toggleCart(props.product.id)}
+        >
           {productIsAdded ? 'Remove from cart' : 'Add to cart'}
         </button>
         {currentProduct && (
-          <div>
-            <button onClick={() => removeProduct()}>- </button>
+          <div data-test-id="product-quantity">
+            <button
+              data-test-id="decrease-quantity"
+              onClick={() => removeProduct()}
+            >
+              -{' '}
+            </button>
             {currentProduct.items}
-            <button onClick={() => addProduct()}>+ </button>
+            <button
+              data-test-id="increase-quantity"
+              onClick={() => addProduct()}
+            >
+              +{' '}
+            </button>
           </div>
         )}
       </section>

@@ -91,11 +91,6 @@ type Props = {
   cart: Cart;
 };
 
-type Crd = {
-  CardMedia: Array<String>;
-  component: string;
-  image: string;
-};
 const cartItemsStyle = css``;
 export default function ShoppingCart(props: Props) {
   const [cartList, setCartList] = useState(props.cart);
@@ -179,7 +174,11 @@ export default function ShoppingCart(props: Props) {
         {newCookie.map((singleItem: CartProduct) => {
           const totalItemPrice = singleItem.price * singleItem.items;
           return (
-            <div key={singleItem.id} css={cartItemsStyle}>
+            <div
+              data-test-id="cart-product-<product id>"
+              key={singleItem.id}
+              css={cartItemsStyle}
+            >
               <table>
                 <Grid md={20}>
                   <Card css={entireCard}>
@@ -217,6 +216,7 @@ export default function ShoppingCart(props: Props) {
                           <p>Total Price: {totalItemPrice}</p>
                           <button
                             css={removeButtonStyle}
+                            data-test-id="cart-product-remove-<product id>"
                             onClick={() => removeProductCart(singleItem.id)}
                           >
                             Remove from cart
@@ -232,7 +232,9 @@ export default function ShoppingCart(props: Props) {
         })}
       </Grid>
 
-      <div css={totalPriceStyle}>Total Price: {totalPrice}</div>
+      <div data-test-id="cart-total" css={totalPriceStyle}>
+        Total Price: {totalPrice}
+      </div>
       <Link href="/checkout">
         <a>
           <button css={buyButtonStyle} data-test-id="cart-checkout">

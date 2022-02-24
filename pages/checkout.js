@@ -14,53 +14,53 @@ export default function Checkout() {
       </div>
 
       <div>
-        <label>
+        <label data-test-id="checkout-first-name">
           First Name:
           <input required type="fname" />
         </label>
-        <label>
+        <label data-test-id="checkout-last-name">
           Last Name:
           <input required type="lname" />
         </label>
 
-        <label>
+        <label data-test-id="checkout-email">
           Email Address:
           <input type="email" required />
         </label>
         <br />
         <br />
-        <label>
+        <label data-test-id="checkout-address">
           Delivery Address:
           <input required />
         </label>
-        <label>
+        <label data-test-id="checkout-city">
           City:
           <input required />
         </label>
-        <label>
+        <label data-test-id="checkout-country">
           Country:
           <input required />
         </label>
-        <label>
+        <label data-test-id="checkout-postal-code">
           Postal Code:
           <input required />
         </label>
         <p>Method of payment</p>
-        <label>
+        <label data-test-id="checkout-credit-card-type">
           Card Type:
           <input required />
         </label>
-        <label>
+        <label data-test-id="checkout-credit-card">
           Card Number:
           <input required />
         </label>
         <br />
         <br />
-        <label>
+        <label data-test-id="checkout-expiration-date">
           Expiration Date:
           <input required />
         </label>
-        <label>
+        <label data-test-id="checkout-security-code">
           CVV Code:
           <input required />
         </label>
@@ -68,7 +68,7 @@ export default function Checkout() {
         <br />
         <Link href="/thankyou">
           <a>
-            <button>Confirm</button>
+            <button data-test-id="checkout-confirm-order">Confirm</button>
           </a>
         </Link>
       </div>

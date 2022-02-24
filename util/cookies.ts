@@ -15,6 +15,7 @@ export type CartProduct = {
   name: string;
   id: number;
   items: number;
+  price: number;
 };
 
 export type Cart = CartProduct[];
