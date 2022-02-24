@@ -15,10 +15,10 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Layout from '../components/Layout';
 import {
+  Cart,
   CartProduct,
   getParsedCookie,
   setParsedCookie,
-  ShoppingCart,
 } from '../util/cookies';
 import { getProducts, Product } from '../util/database';
 
@@ -39,7 +39,8 @@ const productsPageStyle = css`
 `;
 type Props = {
   products: Product;
-  cart: ShoppingCart;
+  cart: Cart;
+  map: any;
 };
 
 export default function Products(props: Props) {
@@ -72,7 +73,7 @@ export default function Products(props: Props) {
       </Head>
       <h1 css={productsPageStyle}>Products</h1>
       <Grid container spacing={3}>
-        {props.products.map((product) => {
+        {props.products.map((product: Product) => {
           const productIsAdded = cartList.some((addedObject) => {
             return addedObject.id === product.id;
           });

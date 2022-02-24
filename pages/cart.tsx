@@ -6,12 +6,18 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useState } from 'react';
 import Layout from '../components/Layout';
-import { getParsedCookie, setParsedCookie } from '../util/cookies.ts';
-import { getProducts } from '../util/database';
+import {
+  Cart,
+  CartProduct,
+  getParsedCookie,
+  setParsedCookie,
+} from '../util/cookies';
+import { getProducts, Product } from '../util/database';
 
 const minusButtonStyle = css`
   margin-top: 2px;
@@ -80,11 +86,21 @@ const cartStyle = css`
   margin-left: 60px;
   position: relative;
 `;
+type Props = {
+  products: Product[];
+  cart: Cart;
+};
+
+type Crd = {
+  CardMedia: Array<String>;
+  component: string;
+  image: string;
+};
 const cartItemsStyle = css``;
-export default function ShoppingCart(props) {
-  const [setCartList] = useState(props.cart);
+export default function ShoppingCart(props: Props) {
+  const [cartList, setCartList] = useState(props.cart);
   const cookieValue = getParsedCookie('cart') || [];
-  const newCookie = cookieValue.map((cookieObject) => {
+  const newCookie = cookieValue.map((cookieObject: CartProduct) => {
     function findName() {
       for (const singleProduct of props.products) {
         if (singleProduct.id === cookieObject.id) {
@@ -102,24 +118,27 @@ export default function ShoppingCart(props) {
   });
   setParsedCookie('cart', newCookie);
 
-  const totalPrice = newCookie.reduce((previousValue, currentValue) => {
-    return previousValue + currentValue.price * currentValue.items;
-  }, 0);
+  const totalPrice = newCookie.reduce(
+    (previousValue: number, currentValue: CartProduct) => {
+      return previousValue + currentValue.price * currentValue.items;
+    },
+    0,
+  );
 
-  function removeProductCart(id) {
+  function removeProductCart(id: number) {
     const cartValue = getParsedCookie('cart') || [];
 
     const updatedCookie = cartValue.filter(
-      (cookieObject) => cookieObject.id !== id,
+      (cookieObject: CartProduct) => cookieObject.id !== id,
     );
 
     setParsedCookie('cart', updatedCookie);
     setCartList(updatedCookie);
   }
 
-  function itemsCountUp(id) {
+  function itemsCountUp(id: number) {
     const cartValue = getParsedCookie('cart') || [];
-    const updatedCookie = cartValue.map((cookieObject) => {
+    const updatedCookie = cartValue.map((cookieObject: CartProduct) => {
       if (cookieObject.id === id) {
         return { ...cookieObject, items: cookieObject.items + 1 };
       } else {
@@ -130,9 +149,9 @@ export default function ShoppingCart(props) {
     setParsedCookie('cart', updatedCookie);
   }
 
-  function itemsCountDown(id) {
+  function itemsCountDown(id: number) {
     const cartValue = getParsedCookie('cart') || [];
-    const updatedCookie = cartValue.map((cookieObject) => {
+    const updatedCookie = cartValue.map((cookieObject: CartProduct) => {
       if (cookieObject.id === id) {
         if (cookieObject.items === 1) {
           return cookieObject;
@@ -150,18 +169,19 @@ export default function ShoppingCart(props) {
     <Layout>
       <Head>
         <title>Shopping Cart</title>
+        <meta name="description" content="Products Cart" />
       </Head>
       <div css={cartStyle}>
         <h1>Shopping Cart</h1>
       </div>
 
       <Grid css={cardsToGrid} item md={5}>
-        {newCookie.map((singleItem) => {
+        {newCookie.map((singleItem: CartProduct) => {
           const totalItemPrice = singleItem.price * singleItem.items;
           return (
             <div key={singleItem.id} css={cartItemsStyle}>
               <table>
-                <Grid item md={20}>
+                <Grid md={20}>
                   <Card css={entireCard}>
                     <tr>
                       <th>
@@ -223,7 +243,7 @@ export default function ShoppingCart(props) {
     </Layout>
   );
 }
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const cartCookies = context.req.cookies.cart || '[]';
   const cart = JSON.parse(cartCookies);
   const productss = await getProducts();

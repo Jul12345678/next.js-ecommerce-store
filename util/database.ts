@@ -1,4 +1,3 @@
-import camelcaseKeys from 'camelcase-keys';
 import { config } from 'dotenv-safe';
 import postgres from 'postgres';
 
@@ -26,6 +25,8 @@ export type Product = {
   type: string;
   image: string;
   price: number;
+  items: string;
+  map: any;
 };
 const sql = connectOneTimeToDatabase();
 

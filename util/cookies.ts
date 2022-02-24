@@ -1,19 +1,19 @@
 import Cookies from 'js-cookie';
 
 export function getParsedCookie(key: string | undefined) {
-  try {
-    return JSON.parse(Cookies.get(key));
-  } catch (err) {
+  const cookieValue = Cookies.get(key);
+  if (!cookieValue) {
     return undefined;
   }
 }
 export type CartProduct = {
   name: string;
   id: number;
+  items: number;
 };
 
-export type ShoppingCart = CartProduct[];
+export type Cart = CartProduct[];
 
-export function setParsedCookie(key: string, value: ShoppingCart) {
+export function setParsedCookie(key: string, value: Cart) {
   Cookies.set(key, JSON.stringify(value));
 }

@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
+import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
-import { getParsedCookie, setParsedCookie } from '../util/cookies.ts';
+import { CartProduct, getParsedCookie } from '../util/cookies';
 
 const headerStyles = css`
   background-color: #f7e948;
@@ -14,12 +15,16 @@ const headerStyles = css`
     margin-right: -110px;
   }
 `;
+
 export default function Header() {
   const cookieValue = getParsedCookie('cart') || [];
   console.log('CookieValue', cookieValue);
-  const quantity = cookieValue.reduce((previousValue, currentValue) => {
-    return previousValue + currentValue.items;
-  }, 0);
+  const quantity = cookieValue.reduce(
+    (previousValue: number, currentValue: CartProduct) => {
+      return previousValue + currentValue.items;
+    },
+    0,
+  );
   console.log('Quantity', quantity);
   return (
     <header css={headerStyles}>
@@ -35,13 +40,13 @@ export default function Header() {
     </header>
   );
 }
-export function getServerSideProps(context) {
+export function getServerSideProps(context: GetServerSidePropsContext) {
   const cartCookies = context.req.cookies.cart || '[]';
   const cart = JSON.parse(cartCookies);
 
   return {
     props: {
-      addedProducts: cart,
+      cart,
     },
   };
 }
