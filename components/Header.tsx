@@ -8,11 +8,18 @@ const headerStyles = css`
   padding: 10px 15px;
   border-radius: 10px;
   margin: 8px 8px 20px;
-
+  position: relative;
+  font-size: 15px;
+  font-family: sans-serif;
+  text-decoration: underline overline #ff3028;
+  opacity: 80%;
+  color: black;
+  text-transform: uppercase;
+  font-weight: bold;
   a + a {
-    margin-left: 860px;
+    margin-left: 820px;
     position: relative;
-    margin-right: -110px;
+    margin-right: -90px;
   }
 `;
 

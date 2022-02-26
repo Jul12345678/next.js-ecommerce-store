@@ -33,9 +33,10 @@ const productStyles = css`
 const productsPageStyle = css`
   border-radius: 5px;
   padding: 15px;
-  margin-bottom: 30px;
+  margin-top: -10px;
+  margin-bottom: 20px;
   align-items: center;
-  margin-left: 870px;
+  margin-left: 840px;
 `;
 type Props = {
   products: Product;
